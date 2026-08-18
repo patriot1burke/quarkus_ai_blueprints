@@ -73,6 +73,11 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 </details>
 
 <details>
+<summary>Glue it together with Quarkus Core</summary>
+
+</details>
+
+<details>
 <summary>Test your AI-Infused Apps</summary>
 
 </details>
