@@ -76,6 +76,11 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 
 </details>
 
+<details>
+<summary>Leverage Enterprise Java</summary>
+
+</details>
+
 ## Testing
 
 <details>
