@@ -89,7 +89,7 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 
 </details>
 
-## Manage, Observe, Score, and Evaluate
+## Runtime Management
 
 <details>
 <summary>Top-knotch telemetry, scoring, and evaluation with LangFuse</summary>
