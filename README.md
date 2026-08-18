@@ -16,7 +16,7 @@ all your favorite Enterprise Java APIs and idioms you and your team have been us
 
 
 <details>
-<summary>Enhancing Your Coding Agent</summary>
+<summary>##Enhancing Your Coding Agent</summary>
 
 Coding agents like Claude Code, GitHub Copilot, and JetBrains AI have created an explosion in developer productivity.  There's a few
 powerful features of Quarkus that make development a unique and enjoyable experience in day-to-day coding tasks.
