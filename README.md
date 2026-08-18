@@ -46,7 +46,6 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 
 </details>
 
-
 <details>
 <summary>Create Tools usable with your LLM</summary>
 
@@ -77,8 +76,17 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 
 </details>
 
+## Test it
+
 <details>
 <summary>Test your AI-Infused Apps</summary>
+
+</details>
+
+## Secure it all
+
+<details>
+<summary>Secure your AI-Infused Applications</summary>
 
 </details>
 
