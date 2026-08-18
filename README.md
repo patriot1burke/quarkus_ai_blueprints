@@ -76,14 +76,14 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 
 </details>
 
-## Test it
+## Testing
 
 <details>
 <summary>Test your AI-Infused Apps</summary>
 
 </details>
 
-## Make it Secure
+## Security
 
 <details>
 <summary>Secure your AI-Infused Applications</summary>
