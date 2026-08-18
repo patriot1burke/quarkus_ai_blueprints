@@ -63,20 +63,10 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 </details>
 
 <details>
-<summary>Index your knowledge using RAG</summary>
+<summary>Information Retrieval (RAG, and other techniques)</summary>
 
 </details>
 
-
-<details>
-<summary>Index your knowledge using RAG</summary>
-
-</details>
-
-<details>
-<summary>Index your knowledge using RAG</summary>
-
-</details>
 <details>
 <summary>Define Agentic Workflows</summary>
 
