@@ -83,7 +83,7 @@ describing how [Quarkus uses Skills and MCP](https://quarkus.io/blog/introducing
 
 </details>
 
-## Secure it all
+## Make it Secure
 
 <details>
 <summary>Secure your AI-Infused Applications</summary>
