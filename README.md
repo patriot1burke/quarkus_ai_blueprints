@@ -224,10 +224,16 @@ for deploying to Kubernetes, OpenShift, AWS, and Azure.
 
 </details>
 
+## Evaluation and Scoring
+
+<details>
+<summary>Top-knotch evaluation and scoring with LangFuse</summary>
+
+</details>
 ## Monitor
 
 <details>
-<summary>Top-knotch telemetry, scoring, and evaluation with LangFuse</summary>
+<summary>Top-knotch telemetry with LangFuse</summary>
 
 </details>
 
