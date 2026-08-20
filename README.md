@@ -64,8 +64,10 @@ public interface Weatherman {
 ```
 
 ### AI Services Blueprint
-
-Link some basic practices for writing prompts with AI Services.
+* Architectural diagram of LC4J->LLM interactions.  Should be simple.
+* Link some basic practices for writing prompts with AI Services.
+* [Managing Chat Memory](https://bill.burkecentral.com/2025/11/25/managing-chat-memory-in-quarkus-langchain4j/) Expand on this
+to include the work done with Chat Scopes.
 
 </details>
 
@@ -146,21 +148,40 @@ Vector DBs
 
 ### LLM Wiki Blueprint
 
-
-
 </details>
 
 <details>
 <summary>Define Agentic Workflows</summary>
 
 Most of this website has talked about human-LLM interactions.  Once you get beyond chat apps and RAG you'll want to 
-truly leverage AI by unleashing agents.  Agentic AI Applications encapsulate complex processes and procedures and unleash
+truly leverage AI by unleashing agents.  Agentic AI Applications encapsulate complex processes and procedures by using
 AI agents that perform the work.
 
-Show basic agents quickly.  Quicker than LC4J docs, or just link them.
+Show basic agents quickly.  Quicker than LC4J docs, or just link to existing docs..
 Talk about how these agents leverage AI Services and the rest of the Quarkus ecosystem of enterprise Java.
 
-### 
+### Agentic Blueprints
+
+Architectural diagram on Agentic Workflows
+
+* Link to Workflow Plans
+
+
+</details>
+
+<details>
+<summary>Guardrails</summary>
+
+AI guardrails are safety controls, filters, and rules that sit between a user and an artificial intelligence model. 
+They intercept inputs and outputs in real time to ensure the system behaves safely, stays on topic, and complies with legal or brand standards
+without changing the core model.
+
+
+Architectural diagram on Guardrails
+
+Talk about how Quarkus AI provides a library of built-in guardrails you can use, and an API for writing and applying your own guardrails.
+
+
 
 </details>
 
@@ -207,10 +228,9 @@ Talk about how core Quarkus has mature security integration and how just writing
 security from the core.
 
 ### Security Blueprint
+Architectural diagram on how various components are secured.
 
 Show how chat apps and MCP are secured.
-
-### Guardrails Blueprint
 
 </details>
 
@@ -224,12 +244,13 @@ for deploying to Kubernetes, OpenShift, AWS, and Azure.
 
 </details>
 
-## Evaluation and Scoring
+## Evaluate and Score
 
 <details>
 <summary>Top-knotch evaluation and scoring with LangFuse</summary>
 
 </details>
+
 ## Monitor
 
 <details>
