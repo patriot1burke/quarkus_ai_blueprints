@@ -47,7 +47,7 @@ Here's a [blueprint](https://quarkus.io/blog/introducing-agent-mcp/) for using S
 ## Write AI-Infused Applications
 
 <details>
-<summary>Basic AI Services</summary>
+<summary> **Basic AI Services** </summary>
 Talk about how Quarkus AI through LC4J provides an abstraction layer for basic LLM interactions.  List the LLM
 models that are support (OpenAI, Ollama, Bob, etc.)
 
