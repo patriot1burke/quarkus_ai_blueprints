@@ -164,15 +164,6 @@ section{padding:clamp(3rem,7vw,4.5rem) 0;border-top:1px solid var(--border);}
 .feature-item p{color:var(--ink-muted);font-size:.94rem;margin-top:.3rem;}
 .feature-item a.mono{color:var(--accent-strong);font-size:.82rem;display:inline-block;margin-top:.5rem;}
 
-/* code showcase (alternating) */
-.showcase{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;margin-bottom:3rem;}
-.showcase:last-child{margin-bottom:0;}
-.showcase.rev .sc-text{order:2;}
-@media (max-width:860px){.showcase{grid-template-columns:1fr;}
-  .showcase.rev .sc-text{order:initial;}}
-.sc-text h3{font-size:1.35rem;}
-.sc-text p{color:var(--ink-muted);margin-top:.7rem;font-size:1rem;}
-.sc-text .link-row{margin-top:1rem;}
 .link-row a{font-family:"IBM Plex Mono";font-size:.85rem;font-weight:600;color:var(--accent-strong);}
 .link-row a::after{content:" \2192";}
 
@@ -185,18 +176,43 @@ pre .tok-annot{color:var(--code-annot);}
 pre .tok-kw{color:var(--code-kw);}
 pre .tok-str{color:var(--code-str);}
 
-/* card grid (remaining write topics) */
-.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:.5rem;}
+/* card grid (Write AI-Infused Applications topics) */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1.6rem;}
 @media (max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:600px){.card-grid{grid-template-columns:1fr;}}
+
 .tile{
-  border:1px solid var(--border);border-radius:14px;padding:1.3rem;background:var(--surface);
-  transition:border-color .15s ease, transform .15s ease;
+  border:1px solid var(--border);border-radius:14px;background:var(--surface);
+  transition:border-color .15s ease, box-shadow .15s ease;
 }
-.tile:hover{border-color:var(--ink-faint);transform:translateY(-2px);}
-.tile .ico{margin-bottom:.9rem;}
+.tile:hover{border-color:var(--ink-faint);}
+.tile[open]{border-color:var(--accent);box-shadow:var(--shadow);}
+.tile > summary{
+  list-style:none;cursor:pointer;padding:1.3rem;
+  display:flex;align-items:flex-start;gap:.9rem;
+}
+.tile > summary::-webkit-details-marker{display:none;}
+.tile .ico{margin-bottom:0;}
+.tile-head-text{min-width:0;flex:1;}
+.tile-title-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
 .tile h3{font-size:1rem;}
-.tile p{color:var(--ink-muted);font-size:.92rem;margin-top:.45rem;}
+.tile-teaser{color:var(--ink-muted);font-size:.9rem;margin-top:.35rem;}
+.chev{
+  flex:none;width:1.5rem;height:1.5rem;border-radius:50%;margin-left:auto;margin-top:.1rem;
+  border:1px solid var(--border);display:grid;place-items:center;color:var(--ink-faint);
+  transition:transform .2s ease,background .2s ease,border-color .2s ease,color .2s ease;
+}
+.chev svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;}
+.tile[open] .chev{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-strong);transform:rotate(45deg);}
+
+.tile-body{padding:0 1.3rem 1.3rem;}
+.tile-body p{color:var(--ink-muted);font-size:.92rem;margin-top:.7rem;}
+.tile-body p:first-child{margin-top:0;padding-top:.95rem;border-top:1px dashed var(--border);}
+.tile-body .code-wrap{margin-top:.9rem;}
+.tile-body .link-row{margin-top:.9rem;padding-top:.85rem;border-top:1px dashed var(--border);}
+.tile-body ul{margin:.6rem 0 0;padding-left:1.15rem;color:var(--ink-muted);font-size:.9rem;}
+.tile-body li{margin:.35rem 0;}
+.tile-body li strong{font-family:"IBM Plex Mono";font-weight:600;font-size:.92em;color:var(--ink);}
 
 /* compact lifecycle sections (Secure / Test / Deploy / Evaluate & Score / Monitor) */
 .section-compact{padding:clamp(2.1rem,4vw,2.7rem) 0;}
@@ -239,8 +255,8 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
       <a href="#secure">Secure</a>
       <a href="#test">Test</a>
       <a href="#deploy">Deploy</a>
-      <a href="#evaluate">Evaluate</a>
       <a href="#monitor">Monitor</a>
+      <a href="#evaluate">Evaluate</a>
     </nav>
     <div class="nav-cta">
       <a class="btn btn-secondary" href="https://quarkus.io" target="_blank" rel="noopener">Quarkus.io</a>
@@ -312,33 +328,47 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
       <p>Quarkus AI gives your application the vocabulary to talk to models, call tools, retrieve knowledge, and act &mdash; all as ordinary CDI beans.</p>
     </div>
 
-    <div class="showcase">
-      <div class="sc-text">
-        <span class="eyebrow">AI Services</span>
-        <h3 style="margin-top:.5rem;">LLM interactions, declared not wired</h3>
-        <p>LangChain4j gives Quarkus AI an abstraction layer over whichever model you choose &mdash; OpenAI, Ollama, and the rest of the LangChain4j catalogue &mdash; so switching providers is a config change, not a rewrite. Annotate a plain Java interface and Quarkus generates the AI Service that talks to the model for you.</p>
-        <div class="link-row"><a href="https://bill.burkecentral.com/2025/11/25/managing-chat-memory-in-quarkus-langchain4j/" target="_blank" rel="noopener">Managing Chat Memory in Quarkus LangChain4j</a></div>
-      </div>
-      <div class="code-wrap">
-        <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">Weatherman.java</span></div>
-        <pre><span class="tok-annot">@RegisterAiService</span>
+    <div class="card-grid">
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 4C7 4 6 5 6 7v3a2 2 0 01-2 2 2 2 0 012 2v3c0 2 1 3 3 3"/><path d="M15 4c2 0 3 1 3 3v3a2 2 0 002 2 2 2 0 00-2 2v3c0 2-1 3-3 3"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>AI Services</h3></div>
+            <p class="tile-teaser">LLM interactions, declared not wired.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>LangChain4j gives Quarkus AI an abstraction layer over whichever model you choose &mdash; OpenAI, Ollama, and the rest of the LangChain4j catalogue &mdash; so switching providers is a config change, not a rewrite. Annotate a plain Java interface and Quarkus generates the AI Service that talks to the model for you.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">Weatherman.java</span></div>
+            <pre><span class="tok-annot">@RegisterAiService</span>
 <span class="tok-kw">public interface</span> Weatherman {
 
     <span class="tok-annot">@SystemMessage</span>(<span class="tok-str">"You are a weatherman.  Answer questions about the weather."</span>)
     <span class="tok-kw">String</span> ask(<span class="tok-annot">@UserMessage</span> <span class="tok-kw">String</span> query);
 }</pre>
-      </div>
-    </div>
+          </div>
+          <p>Architecture at a glance: your code calls the interface, Quarkus AI routes the call through LangChain4j to the configured model, and hands back a typed response.</p>
+          <div class="link-row"><a href="https://bill.burkecentral.com/2025/11/25/managing-chat-memory-in-quarkus-langchain4j/" target="_blank" rel="noopener">Managing Chat Memory in Quarkus LangChain4j</a></div>
+        </div>
+      </details>
 
-    <div class="showcase rev">
-      <div class="sc-text">
-        <span class="eyebrow">Tools</span>
-        <h3 style="margin-top:.5rem;">Give the model hands</h3>
-        <p>Annotate any CDI bean method with <code class="mono">@Tool</code> and describe what it does in plain language. Quarkus AI exposes it to the model through LangChain4j and handles the call-and-return loop, so the LLM can ask for the forecast instead of guessing at it.</p>
-      </div>
-      <div class="code-wrap">
-        <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeatherToolbox.java</span></div>
-        <pre><span class="tok-annot">@ApplicationScoped</span>
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="10" rx="2"/><path d="M8 9V6a2 2 0 012-2h4a2 2 0 012 2v3"/><path d="M3 13h18"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Tools</h3></div>
+            <p class="tile-teaser">Give the model hands.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Annotate any CDI bean method with <code class="mono">@Tool</code> and describe what it does in plain language. Quarkus AI exposes it to the model through LangChain4j and handles the call-and-return loop, so the LLM can ask for the forecast instead of guessing at it.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeatherToolbox.java</span></div>
+            <pre><span class="tok-annot">@ApplicationScoped</span>
 <span class="tok-kw">public class</span> WeatherToolbox {
     <span class="tok-annot">@Inject</span>
     WeatherAPI weather;
@@ -361,40 +391,123 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
     <span class="tok-annot">@Toolbox</span>(WeatherToolbox.<span class="tok-kw">class</span>)
     <span class="tok-kw">String</span> ask(<span class="tok-annot">@UserMessage</span> <span class="tok-kw">String</span> query);
 }</pre>
-      </div>
-    </div>
+          </div>
+          <p><span class="state-pill">In progress</span> &nbsp;A best-practices guide for writing LLM tools.</p>
+        </div>
+      </details>
 
-    <div class="card-grid">
-      <div class="tile">
-        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 11l7.6-4M8.2 13l7.6 4"/></svg></div>
-        <h3>Enterprise toolboxes with MCP</h3>
-        <p>Publish existing microservices as MCP toolboxes, or consume ones published elsewhere &mdash; think of it as microservices for AI. <span class="state-pill">In progress</span></p>
-      </div>
-      <div class="tile">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5z"/></svg></div>
-        <h3>Rich chat applications</h3>
-        <p>The Chat Routes framework gives Quarkus AI the invocation model for chat UIs that render more than plain text.</p>
-      </div>
-      <div class="tile">
-        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg></div>
-        <h3>Retrieval &amp; RAG</h3>
-        <p>Ground a model in your own documents &mdash; basic and Docling ingestion, plus first-class vector database access. <span class="state-pill">In progress</span></p>
-      </div>
-      <div class="tile">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h11M4 12h16M4 18h8"/><circle cx="19" cy="6" r="1.6"/><circle cx="8" cy="18" r="1.6"/></svg></div>
-        <h3>Agentic workflows</h3>
-        <p>Agents built from the same AI Services and CDI beans own a process end to end. <span class="state-pill">In progress</span></p>
-      </div>
-      <div class="tile">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
-        <h3>Guardrails</h3>
-        <p>Real-time checks on what goes in and what comes back out &mdash; built-in guardrails, plus an API for your own.</p>
-      </div>
-      <div class="tile">
-        <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
-        <h3>Glued together with CDI</h3>
-        <p>Every AI component is a CDI bean &mdash; chat memory and agentic context lifecycles managed by bean scope, plus two purpose-built scopes: <code class="mono">@ChatScope</code> and <code class="mono">@InvocationScope</code>.</p>
-      </div>
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 11l7.6-4M8.2 13l7.6 4"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Enterprise Toolboxes with MCP</h3><span class="state-pill">In progress</span></div>
+            <p class="tile-teaser">Microservices for AI.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Your organization has spent years writing microservices that already know how to analyze and report on the business. The MCP specification lets an LLM call them directly &mdash; think of it as microservices for AI. Quarkus AI can stand up an MCP server that publishes your toolboxes, and consume MCP servers published by others, so those existing systems become tools an agent can simply reach for.</p>
+          <ul><li>Enterprise toolbox blueprint &mdash; discovery and registry patterns for published toolboxes</li></ul>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5z"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Rich Chat Applications</h3></div>
+            <p class="tile-teaser">More than plain text.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Professional chat applications do more than print plain text &mdash; the good ones render what comes back from the model the way a real interface should. The Chat Routes framework gives Quarkus AI the invocation model for building exactly that kind of UI.</p>
+          <div class="link-row"><a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/chat-scopes.html#_chat_invocation_framework_chatroute" target="_blank" rel="noopener">Chat Invocation Framework docs</a></div>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Retrieval &amp; RAG</h3><span class="state-pill">In progress</span></div>
+            <p class="tile-teaser">Ground the model in your documents.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Retrieval-augmented generation grounds a model in your own documents instead of its training data. Quarkus AI's ingestion pipeline &mdash; including Docling support for real-world document parsing &mdash; and first-class access to vector databases put that pipeline a Dev Service away.</p>
+          <ul>
+            <li>RAG blueprint &mdash; basic and Docling ingestion, vector databases</li>
+            <li>Advanced RAG pipeline blueprint</li>
+            <li>LLM wiki blueprint</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h11M4 12h16M4 18h8"/><circle cx="19" cy="6" r="1.6"/><circle cx="8" cy="18" r="1.6"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Agentic Workflows</h3><span class="state-pill">In progress</span></div>
+            <p class="tile-teaser">Agents that own a process end to end.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Chat and RAG still put a human in the driver's seat. Agentic workflows hand over the wheel: an agent, built from the same AI Services and CDI beans as the rest of the app, owns a process end to end and calls on the rest of the Quarkus ecosystem to get it done.</p>
+          <ul><li>Agentic blueprints &mdash; architecture diagram and workflow plans</li></ul>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Guardrails</h3></div>
+            <p class="tile-teaser">Safety controls between user and model.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Guardrails are the safety layer between a user and the model &mdash; real-time checks on what goes in and what comes back out, keeping the system on topic and inside legal and brand lines, without touching the model itself. Quarkus AI ships a library of built-in guardrails and an API for writing your own.</p>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Glued Together with CDI</h3></div>
+            <p class="tile-teaser">Every AI component is a CDI bean.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Every AI component &mdash; AI Services, Tools, RAG, agents &mdash; is a CDI bean, so the rest of Quarkus Core is never more than an <code class="mono">@Inject</code> away.</p>
+          <ul>
+            <li><strong>Chat Memory</strong> lifecycle managed by bean scope</li>
+            <li><strong>Agentic context</strong> lifecycle managed by bean scope</li>
+            <li>Plain CDI injection wires it all together</li>
+            <li>Two new scopes purpose-built for AI: <strong>@ChatScope</strong> for a conversation, <strong>@InvocationScope</strong> for a single invocation</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="tile">
+        <summary>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 3h6v3.5a2 2 0 002 2H21v6h-3.5a2 2 0 00-2 2V21H9v-3.5a2 2 0 00-2-2H3v-6h3.5a2 2 0 002-2V3z"/></svg></div>
+          <div class="tile-head-text">
+            <div class="tile-title-row"><h3>Leverage Enterprise Java</h3></div>
+            <p class="tile-teaser">The whole Quarkus ecosystem, still there.</p>
+          </div>
+          <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
+        </summary>
+        <div class="tile-body">
+          <p>Because AI Services, Tools, and Agents are CDI beans, they live inside the same application as everything else you already run on Quarkus &mdash; Hibernate, Kafka, REST, and the rest of the extension catalogue are all still there.</p>
+        </div>
+      </details>
+
     </div>
   </div>
 </section>
@@ -432,24 +545,24 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
   </div>
 </section>
 
-<!-- EVALUATE & SCORE -->
-<section id="evaluate" class="section-compact alt-bg">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Evaluate &amp; Score</span>
-      <div class="head-row" style="margin-top:.6rem;"><h2>Evaluate &amp; Score</h2><span class="state-pill">In progress</span></div>
-      <p style="margin-top:.7rem;">LangFuse plugs into Quarkus AI for evaluation and scoring, so you can measure how well the application is actually doing &mdash; not just whether it compiles.</p>
-    </div>
-  </div>
-</section>
-
 <!-- MONITOR -->
-<section id="monitor" class="section-compact">
+<section id="monitor" class="section-compact alt-bg">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Monitor</span>
       <div class="head-row" style="margin-top:.6rem;"><h2>Monitor</h2><span class="state-pill">In progress</span></div>
       <p style="margin-top:.7rem;">The same LangFuse integration carries through to production, giving you telemetry into what your AI-infused application is doing at runtime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EVALUATE & SCORE -->
+<section id="evaluate" class="section-compact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Evaluate &amp; Score</span>
+      <div class="head-row" style="margin-top:.6rem;"><h2>Evaluate &amp; Score</h2><span class="state-pill">In progress</span></div>
+      <p style="margin-top:.7rem;">LangFuse plugs into Quarkus AI for evaluation and scoring, so you can measure how well the application is actually doing &mdash; not just whether it compiles.</p>
     </div>
   </div>
 </section>
@@ -480,8 +593,8 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <li><a href="#secure">Secure</a></li>
           <li><a href="#test">Test</a></li>
           <li><a href="#deploy">Deploy</a></li>
-          <li><a href="#evaluate">Evaluate &amp; Score</a></li>
           <li><a href="#monitor">Monitor</a></li>
+          <li><a href="#evaluate">Evaluate &amp; Score</a></li>
         </ul>
       </div>
       <div class="foot-col">
