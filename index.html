@@ -125,7 +125,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
 .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.02rem;}
 .brand-mark{width:1.15rem;height:1.15rem;border-radius:4px;background:var(--accent);}
 .nav-links{display:flex;gap:1.15rem;font-size:.87rem;color:var(--ink-muted);}
-.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);}
 .nav-cta{display:flex;align-items:center;gap:.7rem;}
 @media (max-width:960px){.nav-links{display:none;}}
 
@@ -133,7 +133,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
 .hero{padding:clamp(3.5rem,8vw,5.5rem) 0 clamp(2.5rem,6vw,4rem);text-align:center;}
 .hero h1{font-size:clamp(2.4rem,5.4vw,3.6rem);line-height:1.08;max-width:16ch;margin:1.1rem auto 0;}
 .hero p.lede{max-width:56ch;margin:1.2rem auto 0;color:var(--ink-muted);font-size:1.1rem;}
-.hero-ctas{display:flex;justify-content:center;gap:.8rem;margin-top:1.8rem;flex-wrap:wrap;}
 
 .chip-row{
   display:flex;flex-wrap:wrap;justify-content:center;gap:.55rem;
@@ -150,6 +149,41 @@ section{padding:clamp(3rem,7vw,4.5rem) 0;border-top:1px solid var(--border);}
 .section-head h2{font-size:clamp(1.7rem,3.2vw,2.3rem);margin-top:.6rem;}
 .section-head p{color:var(--ink-muted);margin-top:.7rem;font-size:1.02rem;}
 .alt-bg{background:var(--bg-alt);}
+
+/* cycling panel */
+.panel-region{padding:clamp(3rem,7vw,4.5rem) 0;border-top:1px solid var(--border);}
+.panel{
+  position:relative;border:1px solid var(--border);border-radius:20px;
+  background:var(--surface);box-shadow:var(--shadow);overflow:hidden;
+}
+.panel-progress{height:3px;background:var(--border);}
+.panel-progress-bar{height:100%;width:0%;background:var(--accent);opacity:0;}
+.panel-progress-bar.bar-anim{opacity:1;animation:panelProgress 6000ms linear forwards;}
+@keyframes panelProgress{from{width:0%;}to{width:100%;}}
+
+.panel-slides{position:relative;padding:clamp(2rem,5vw,3rem);overflow:hidden;transition:height .4s ease;}
+.panel-slide{display:none;}
+.panel-slide.is-active{display:block;animation:panelFade .35s ease;}
+@keyframes panelFade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.panel-controls{display:flex;align-items:center;justify-content:center;gap:1.2rem;padding:.9rem clamp(1.2rem,4vw,2rem);}
+.panel-controls-top{border-bottom:1px solid var(--border);}
+.panel-controls-bottom{border-top:1px solid var(--border);}
+.panel-arrow{
+  flex:none;width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid var(--border);
+  background:var(--surface);color:var(--ink-muted);display:grid;place-items:center;cursor:pointer;
+  transition:border-color .15s ease,color .15s ease;
+}
+.panel-arrow:hover{border-color:var(--ink-faint);color:var(--ink);}
+.panel-arrow svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.panel-status{display:flex;flex-direction:column;align-items:center;gap:.2rem;min-width:15rem;text-align:center;}
+.panel-status .p-index{font-family:"IBM Plex Mono";font-size:.7rem;letter-spacing:.1em;color:var(--ink-faint);}
+.panel-status .p-name{font-weight:700;font-size:.95rem;}
+
+@media (prefers-reduced-motion: reduce){
+  .panel-progress{display:none;}
+  .panel-slide.is-active{animation:none;}
+}
 
 /* icon list (Develop) */
 .feature-list{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem 2rem;margin-top:1rem;}
@@ -214,19 +248,7 @@ pre .tok-str{color:var(--code-str);}
 .tile-body li{margin:.35rem 0;}
 .tile-body li strong{font-family:"IBM Plex Mono";font-weight:600;font-size:.92em;color:var(--ink);}
 
-/* compact lifecycle sections (Secure / Test / Deploy / Evaluate & Score / Monitor) */
-.section-compact{padding:clamp(2.1rem,4vw,2.7rem) 0;}
-.section-compact .section-head{margin-bottom:0;max-width:680px;}
 .head-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;}
-
-/* cta band */
-.cta-band{
-  border-top:1px solid var(--border);padding:clamp(3rem,7vw,4.5rem) 0;
-  text-align:center;background:var(--bg-alt);
-}
-.cta-band h2{font-size:clamp(1.6rem,3vw,2.1rem);max-width:24ch;margin:0 auto;}
-.cta-band p{color:var(--ink-muted);margin-top:.8rem;}
-.cta-band .hero-ctas{margin-top:1.6rem;}
 
 /* footer */
 footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
@@ -276,15 +298,32 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
   </div>
 </section>
 
-<!-- DEVELOP -->
-<section id="develop">
+<div class="panel-region">
   <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Develop</span>
-      <h2>A better day-to-day with your coding agent</h2>
-      <p>Coding agents like Claude Code, GitHub Copilot, and JetBrains AI have driven an explosion in developer productivity. A few Quarkus features make working with them a genuinely different experience.</p>
-    </div>
-    <div class="feature-list">
+    <div class="panel">
+      <div class="panel-controls panel-controls-top">
+        <button type="button" class="panel-arrow panel-prev" aria-label="Previous section">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="panel-status">
+          <span class="p-index mono">01 / 07</span>
+          <span class="p-name">Develop</span>
+        </div>
+        <button type="button" class="panel-arrow panel-next" aria-label="Next section">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="panel-progress"><div class="panel-progress-bar" id="panelBar"></div></div>
+      <div class="panel-slides" id="panelSlides">
+
+        <!-- DEVELOP -->
+        <div class="panel-slide" id="develop" data-name="Develop">
+          <div class="section-head">
+            <span class="eyebrow">Develop</span>
+            <h2>A better day-to-day with your coding agent</h2>
+            <p>Coding agents like Claude Code, GitHub Copilot, and JetBrains AI have driven an explosion in developer productivity. A few Quarkus features make working with them a genuinely different experience.</p>
+          </div>
+          <div class="feature-list">
       <div class="feature-item">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 17l6-6-6-6M12 19h8"/></svg></div>
         <div>
@@ -315,20 +354,18 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <a class="mono" href="https://quarkus.io/blog/introducing-agent-mcp/" target="_blank" rel="noopener">How does Quarkus enhance coding agents? &rarr;</a>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+          </div>
+        </div>
 
-<!-- WRITE -->
-<section id="write" class="alt-bg">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Write AI-Infused Applications</span>
-      <h2>Write AI-infused applications</h2>
-      <p>Quarkus AI gives your application the vocabulary to talk to models, call tools, retrieve knowledge, and act &mdash; all as ordinary CDI beans.</p>
-    </div>
+        <!-- WRITE -->
+        <div class="panel-slide" id="write" data-name="Write AI-Infused Applications">
+          <div class="section-head">
+            <span class="eyebrow">Write AI-Infused Applications</span>
+            <h2>Write AI-infused applications</h2>
+            <p>Quarkus AI gives your application the vocabulary to talk to models, call tools, retrieve knowledge, and act &mdash; all as ordinary CDI beans.</p>
+          </div>
 
-    <div class="card-grid">
+          <div class="card-grid">
 
       <details class="tile">
         <summary>
@@ -508,72 +545,67 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-    </div>
-  </div>
-</section>
+          </div>
+        </div>
 
-<!-- SECURE -->
-<section id="secure" class="section-compact">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Secure</span>
-      <h2>Security by default</h2>
-      <p>An AI-infused Quarkus application inherits Quarkus Core's mature security integration by default &mdash; you don't bolt security onto the AI parts, you get it because the AI parts are Quarkus. That covers how chat apps and MCP endpoints are secured, too.</p>
-    </div>
-  </div>
-</section>
+        <!-- SECURE -->
+        <div class="panel-slide" id="secure" data-name="Secure">
+          <div class="section-head">
+            <span class="eyebrow">Secure</span>
+            <h2>Security by default</h2>
+            <p>An AI-infused Quarkus application inherits Quarkus Core's mature security integration by default &mdash; you don't bolt security onto the AI parts, you get it because the AI parts are Quarkus. That covers how chat apps and MCP endpoints are secured, too.</p>
+          </div>
+        </div>
 
-<!-- TEST -->
-<section id="test" class="section-compact alt-bg">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Test</span>
-      <div class="head-row" style="margin-top:.6rem;"><h2>Test</h2><span class="state-pill">In progress</span></div>
-      <p style="margin-top:.7rem;">Quarkus AI's evaluation APIs let you test an AI-infused application the way you'd test anything else on Quarkus &mdash; with real assertions against what the model actually did.</p>
-    </div>
-  </div>
-</section>
+        <!-- TEST -->
+        <div class="panel-slide" id="test" data-name="Test">
+          <div class="section-head">
+            <span class="eyebrow">Test</span>
+            <div class="head-row" style="margin-top:.6rem;"><h2>Test</h2><span class="state-pill">In progress</span></div>
+            <p style="margin-top:.7rem;">Quarkus AI's evaluation APIs let you test an AI-infused application the way you'd test anything else on Quarkus &mdash; with real assertions against what the model actually did.</p>
+          </div>
+        </div>
 
-<!-- DEPLOY -->
-<section id="deploy" class="section-compact">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Deploy</span>
-      <h2>Deploy anywhere Quarkus already runs</h2>
-      <p>Quarkus has been cloud-native since before that was a requirement &mdash; the same out-of-the-box support for Kubernetes, OpenShift, AWS, and Azure applies whether or not the application talks to an LLM.</p>
-    </div>
-  </div>
-</section>
+        <!-- DEPLOY -->
+        <div class="panel-slide" id="deploy" data-name="Deploy">
+          <div class="section-head">
+            <span class="eyebrow">Deploy</span>
+            <h2>Deploy anywhere Quarkus already runs</h2>
+            <p>Quarkus has been cloud-native since before that was a requirement &mdash; the same out-of-the-box support for Kubernetes, OpenShift, AWS, and Azure applies whether or not the application talks to an LLM.</p>
+          </div>
+        </div>
 
-<!-- MONITOR -->
-<section id="monitor" class="section-compact alt-bg">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Monitor</span>
-      <div class="head-row" style="margin-top:.6rem;"><h2>Monitor</h2><span class="state-pill">In progress</span></div>
-      <p style="margin-top:.7rem;">The same LangFuse integration carries through to production, giving you telemetry into what your AI-infused application is doing at runtime.</p>
-    </div>
-  </div>
-</section>
+        <!-- MONITOR -->
+        <div class="panel-slide" id="monitor" data-name="Monitor">
+          <div class="section-head">
+            <span class="eyebrow">Monitor</span>
+            <div class="head-row" style="margin-top:.6rem;"><h2>Monitor</h2><span class="state-pill">In progress</span></div>
+            <p style="margin-top:.7rem;">The same LangFuse integration carries through to production, giving you telemetry into what your AI-infused application is doing at runtime.</p>
+          </div>
+        </div>
 
-<!-- EVALUATE & SCORE -->
-<section id="evaluate" class="section-compact">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">Evaluate &amp; Score</span>
-      <div class="head-row" style="margin-top:.6rem;"><h2>Evaluate &amp; Score</h2><span class="state-pill">In progress</span></div>
-      <p style="margin-top:.7rem;">LangFuse plugs into Quarkus AI for evaluation and scoring, so you can measure how well the application is actually doing &mdash; not just whether it compiles.</p>
-    </div>
-  </div>
-</section>
+        <!-- EVALUATE & SCORE -->
+        <div class="panel-slide" id="evaluate" data-name="Evaluate &amp; Score">
+          <div class="section-head">
+            <span class="eyebrow">Evaluate &amp; Score</span>
+            <div class="head-row" style="margin-top:.6rem;"><h2>Evaluate &amp; Score</h2><span class="state-pill">In progress</span></div>
+            <p style="margin-top:.7rem;">LangFuse plugs into Quarkus AI for evaluation and scoring, so you can measure how well the application is actually doing &mdash; not just whether it compiles.</p>
+          </div>
+        </div>
 
-<div class="cta-band">
-  <div class="wrap">
-    <h2>Bring your coding agent. Bring your LLM. Bring Quarkus.</h2>
-    <p>Everything above runs on the Quarkus you already know &mdash; same Dev Services, same CDI, same deploy targets.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-primary" href="https://quarkus.io/blog/introducing-agent-mcp/" target="_blank" rel="noopener">Read the blueprint</a>
-      <a class="btn btn-secondary" href="https://quarkus.io" target="_blank" rel="noopener">Explore Quarkus.io</a>
+      </div>
+      <div class="panel-controls panel-controls-bottom">
+        <button type="button" class="panel-arrow panel-prev" aria-label="Previous section">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="panel-status">
+          <span class="p-index mono">01 / 07</span>
+          <span class="p-name">Develop</span>
+        </div>
+        <button type="button" class="panel-arrow panel-next" aria-label="Next section">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -610,6 +642,136 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
     <div class="foot-bottom mono">Built from the project README.</div>
   </div>
 </footer>
+
+<script>
+(function(){
+  var region = document.querySelector('.panel-region');
+  var slidesEl = document.getElementById('panelSlides');
+  var panelEl = document.querySelector('.panel');
+  if(!region || !slidesEl || !panelEl) return;
+
+  var slides = Array.prototype.slice.call(slidesEl.querySelectorAll('.panel-slide'));
+  var bar = document.getElementById('panelBar');
+  var indexEls = Array.prototype.slice.call(panelEl.querySelectorAll('.p-index'));
+  var nameEls = Array.prototype.slice.call(panelEl.querySelectorAll('.p-name'));
+  var prevBtns = Array.prototype.slice.call(panelEl.querySelectorAll('.panel-prev'));
+  var nextBtns = Array.prototype.slice.call(panelEl.querySelectorAll('.panel-next'));
+  var jumpLinks = Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]')).filter(function(a){
+    return slides.some(function(s){ return '#' + s.id === a.getAttribute('href'); });
+  });
+
+  var INTERVAL = 6000;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx = 0;
+  var autoplay = !reduceMotion;
+  var timer = null;
+  var animating = false;
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+  function render(){
+    slides.forEach(function(s, i){ s.classList.toggle('is-active', i === idx); });
+    var indexText = pad(idx + 1) + ' / ' + pad(slides.length);
+    var nameText = slides[idx].dataset.name || slides[idx].id;
+    indexEls.forEach(function(el){ el.textContent = indexText; });
+    nameEls.forEach(function(el){ el.textContent = nameText; });
+    jumpLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + slides[idx].id);
+    });
+  }
+
+  function resizeAndRender(newIdx){
+    var oldHeight = slidesEl.offsetHeight;
+    slidesEl.style.transition = 'none';
+    slidesEl.style.height = oldHeight + 'px';
+    void slidesEl.offsetHeight;
+    slidesEl.style.transition = '';
+
+    idx = newIdx;
+    render();
+
+    var newHeight = slidesEl.scrollHeight;
+    animating = true;
+    requestAnimationFrame(function(){
+      slidesEl.style.height = newHeight + 'px';
+    });
+    clearTimeout(resizeAndRender._fallback);
+    resizeAndRender._fallback = setTimeout(finishResize, 500);
+  }
+
+  function finishResize(){
+    if(!animating) return;
+    animating = false;
+    slidesEl.style.height = 'auto';
+  }
+  slidesEl.addEventListener('transitionend', function(e){
+    if(e.propertyName === 'height') finishResize();
+  });
+
+  function playBar(){
+    bar.classList.remove('bar-anim');
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    void bar.offsetWidth;
+    bar.style.transition = '';
+    bar.classList.add('bar-anim');
+  }
+
+  function freezeBar(){
+    var w = getComputedStyle(bar).width;
+    bar.classList.remove('bar-anim');
+    bar.style.width = w;
+    bar.style.opacity = '0';
+  }
+
+  function scheduleNext(){
+    clearTimeout(timer);
+    if(!autoplay) return;
+    playBar();
+    timer = setTimeout(function(){
+      activate(idx + 1);
+      scheduleNext();
+    }, INTERVAL);
+  }
+
+  function stopAutoplay(){
+    if(!autoplay) return;
+    autoplay = false;
+    clearTimeout(timer);
+    freezeBar();
+  }
+
+  function activate(i){
+    if(animating) return;
+    var n = slides.length;
+    resizeAndRender(((i % n) + n) % n);
+  }
+
+  function navigate(i){
+    activate(i);
+    stopAutoplay();
+  }
+
+  prevBtns.forEach(function(btn){ btn.addEventListener('click', function(){ navigate(idx - 1); }); });
+  nextBtns.forEach(function(btn){ btn.addEventListener('click', function(){ navigate(idx + 1); }); });
+
+  jumpLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var target = slides.findIndex(function(s){ return s.id === id; });
+      if(target === -1) return;
+      e.preventDefault();
+      navigate(target);
+      panelEl.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
+  panelEl.addEventListener('click', function(){ stopAutoplay(); });
+
+  render();
+  if(autoplay) scheduleNext();
+})();
+</script>
 
 </body>
 </html>
