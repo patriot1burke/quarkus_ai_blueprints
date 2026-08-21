@@ -1,4 +1,8 @@
 # Quarkus AI
+_Enterprise AI for Java_
+
+Enhance your coding agent experience or create AI-infused applications.
+Written for and by developers.  Coding still matters.
 
 Quarkus has long been a great choice for creating any type of Java-based application.  Whether it be microservices, cloud-native, or even command-line 
 utilties, Quarkus's ease of use, fast development lifecycle and performance brings nothing but developer joy.
@@ -15,7 +19,7 @@ all your favorite Enterprise Java APIs and idioms you and your team have been us
 
 
 
-## Develop Code with Joy
+## Develop
 
 <details>
 <summary>Enhancing Your Coding Agent</summary>
@@ -47,7 +51,7 @@ Here's a [blueprint](https://quarkus.io/blog/introducing-agent-mcp/) for using S
 ## Write AI-Infused Applications
 
 <details>
-<summary> **Basic AI Services** </summary>
+<summary> Basic AI Services </summary>
 Talk about how Quarkus AI through LC4J provides an abstraction layer for basic LLM interactions.  List the LLM
 models that are support (OpenAI, Ollama, Bob, etc.)
 
@@ -88,7 +92,7 @@ public class WeatherToolbox {
         return weather.currentEither(city); 
     }
     
-    @Tool("Get the 10 day forecast for a specific city")
+    @Tool("Get the 10 day weather forecast for a specific city")
     public List<String> tenDayForecast(String city) {
         return weather.tenDayForecastEither(city);
     }
@@ -115,9 +119,10 @@ Best practices for writing LLM Tools.
 <summary>Use and Publish Enterprise Toolboxes with MCP</summary>
 
 Your organization has spent years writing microservices that analyze and report your company's data and implements the
-processes of your organization.  Wouldn't it be cool to leverage these exisiting systems for use within an LLM?
+processes of your organization.  Wouldn't it be cool to leverage these exisiing systems for use within an LLM?
 The MCP specification defines a remote protocol for interacting with AI tools that are deployed remotely.  Quarkus
 AI provides a way to define your own MCP Server to publish toolboxes and APIs to use these remote toolboxes in your AI-Infused applications.
+Think of MCP as microservices for AI.
 
 Show a simple example.
 
