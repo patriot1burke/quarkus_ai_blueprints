@@ -1,7 +1,5 @@
-## Secure
+## Secure your AI Applications
 
-<details>
-<summary>Secure your AI-Infused Applications</summary>
 
 Talk about how core Quarkus has mature security integration and how just writing a Quarkus AI-infused application inherits
 security from the core.
@@ -11,4 +9,3 @@ Architectural diagram on how various components are secured.
 
 Show how chat apps and MCP are secured.
 
-</details>

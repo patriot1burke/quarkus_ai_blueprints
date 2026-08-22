@@ -1,7 +1,6 @@
 # Develop
 
-<details>
-<summary>Enhancing Your Coding Agent</summary>
+## Enhancing Your Coding Agent
 
 Coding agents like Claude Code, GitHub Copilot, and JetBrains AI have created an explosion in developer productivity.  There's a few
 powerful features of Quarkus that make development a unique and enjoyable experience in day-to-day interaction with these tools.
@@ -25,4 +24,4 @@ powerful features of Quarkus that make development a unique and enjoyable experi
 
 Here's a [blueprint](https://quarkus.io/blog/introducing-agent-mcp/) for using Skills and MCP when developing any type of Quarkus application with a coding agent.
 
-</details>
+

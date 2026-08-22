@@ -1,6 +1,5 @@
-## Evaluate and Score
+# Evaluate and Score
 
-<details>
-<summary>Top-knotch evaluation and scoring with LangFuse</summary>
+## Top-knotch evaluation and scoring with LangFuse
 
-</details>
+

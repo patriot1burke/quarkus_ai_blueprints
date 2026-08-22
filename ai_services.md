@@ -1,5 +1,4 @@
-<details>
-<summary> Basic AI Services </summary>
+## AI Services 
 Talk about how Quarkus AI through LC4J provides an abstraction layer for basic LLM interactions.  List the LLM
 models that are support (OpenAI, Ollama, Bob, etc.)
 
@@ -21,4 +20,3 @@ public interface Weatherman {
 * [Managing Chat Memory](https://bill.burkecentral.com/2025/11/25/managing-chat-memory-in-quarkus-langchain4j/) Expand on this
   to include the work done with Chat Scopes.
 
-</details>

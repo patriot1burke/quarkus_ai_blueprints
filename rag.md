@@ -1,6 +1,5 @@
 
-<details>
-<summary>Information Retrieval and Analysis(RAG, and other techniques)</summary>
+# Retrieval with RAG and other techniques
 
 Talk about basic RAG.  Give brief reason that Quarkus AI is a good fit for RAG.
 
@@ -12,4 +11,4 @@ Vector DBs
 
 ### LLM Wiki Blueprint
 
-</details>
+

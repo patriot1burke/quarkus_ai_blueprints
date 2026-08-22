@@ -1,6 +1,7 @@
 
-<details>
-<summary>Use and Publish Enterprise Toolboxes with MCP</summary>
+# Enterprise Toolboxes with MCP
+
+Microservices for AI.
 
 Your organization has spent years writing microservices that analyze and report your company's data and implements the
 processes of your organization.  Wouldn't it be cool to leverage these exisiing systems for use within an LLM?
@@ -14,4 +15,4 @@ Show a simple example.
 
 Talk about discovery and all that fun stuff we used to talk about with a registry of microservices.  Its all the same shit over and over again.
 
-</details>
+

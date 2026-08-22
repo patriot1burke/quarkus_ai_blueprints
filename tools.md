@@ -1,5 +1,4 @@
-<details>
-<summary>Create Tools usable with your LLM</summary>
+# LLM Tools
 
 Describe what tools are and how they work with the LLM.  Tell how Quarkus AI thru LC4J makes it
 really easy to incorporate LLM tools with your AI-Infused applications.
@@ -36,5 +35,5 @@ public interface Weatherman {
 
 Best practices for writing LLM Tools.
 
-</details>
+
 
