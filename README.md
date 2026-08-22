@@ -19,15 +19,15 @@ all your favorite Enterprise Java APIs and idioms you and your team have been us
 
 * [Develop](develop.md)
 * Write AI-Infused Applications
-  * [AI Services](ai-services.md)
+  * [AI Services](ai_services.md)
   * [Tools and Toolboxes](tools.md)
   * [Enterprise Toolboxes with MCP](mcp.md)
   * [Rich Chat Applications](chat.md)
   * [Retrieval and RAG](rag.md)
-  * [Agentic Workflows](agentic-workflow.md)
+  * [Agentic Workflows](agentic_workflow.md)
   * [Guardrails](guardrails.md)
   * [Glued together with CDI](glue.md)
-  * [Leverage Enterprise Java](leverage-enterprise.md)
+  * [Leverage Enterprise Java](leverage_enterprise.md)
 * [Secure](secure.md)
 * [Test](test.md)
 * [Deploy](deploy.md)
