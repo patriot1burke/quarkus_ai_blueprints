@@ -1,0 +1,9 @@
+## Deploy
+
+<details>
+<summary>Deploy your AI-Infused Apps</summary>
+
+Talk about how Quarkus has always been a cloud-native framework and that it has out-of-the-box support
+for deploying to Kubernetes, OpenShift, AWS, and Azure.
+
+</details>
