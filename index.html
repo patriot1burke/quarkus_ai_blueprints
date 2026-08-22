@@ -574,9 +574,16 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         <div class="panel-slide" id="secure" data-name="Secure">
           <div class="section-head">
             <span class="eyebrow">Secure</span>
-            <h2>Security by default</h2>
-            <p>An AI-infused Quarkus application inherits Quarkus Core's mature security integration by default &mdash; you don't bolt security onto the AI parts, you get it because the AI parts are Quarkus. That covers how chat apps and MCP endpoints are secured, too.</p>
+            <h2>Secure your AI Applications</h2>
+            <p style="margin-top:.7rem;"><a href="https://quarkus.io/guides/security-overview" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">Quarkus Security</a> has provided the features developers need to secure their Enterprise Java applications. Securing secrets, authentication protocols like OAuth2 and OIDC, and role-based access control among many other features have been available and mature for years within Quarkus.</p>
           </div>
+          <p style="color:var(--ink-muted);font-size:.94rem;">AI-infused applications are generally built on top of the same protocols as traditional web applications and services so to secure them, just leverage what's there right now. Here's a few samples:</p>
+          <ul style="margin:.6rem 0 0;padding-left:1.15rem;color:var(--ink-muted);font-size:.94rem;">
+            <li style="margin:.35rem 0;"><a href="https://github.com/quarkiverse/quarkus-langchain4j/tree/main/samples/secure-sql-chatbot" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">Securing a Chat Bot</a></li>
+            <li style="margin:.35rem 0;"><a href="https://github.com/quarkiverse/quarkus-langchain4j/tree/main/samples/secure-mcp-client-server" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">Securing an MCP client and server</a></li>
+          </ul>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">AI Applications introduce a few more security vulnerabilities you need to be aware of. The Quarkus team has put together a <a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/security.html" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">blueprint</a> dealing with these vulnerabilities.</p>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;"><a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/guardrails.html" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">Guardrails</a> are also an important part of this.</p>
         </div>
 
         <!-- TEST -->
