@@ -583,8 +583,41 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         <div class="panel-slide" id="test" data-name="Test">
           <div class="section-head">
             <span class="eyebrow">Test</span>
-            <div class="head-row" style="margin-top:.6rem;"><h2>Test</h2><span class="state-pill">In progress</span></div>
-            <p style="margin-top:.7rem;">Quarkus AI's evaluation APIs let you test an AI-infused application the way you'd test anything else on Quarkus &mdash; with real assertions against what the model actually did.</p>
+            <h2>Test AI Apps</h2>
+            <p style="margin-top:.7rem;">Quarkus has a great <a href="https://quarkus.io/guides/getting-started-testing" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">test harness</a> for testing any Quarkus-based application, but testing interactions with the LLM can be a little tricky. Since the output of your code's interactions with the LLM is non-deterministic, you will probably get a different output even if you send in the same input every time. So, how can you test your <a href="#write" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>? Quarkus provides an <a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/testing.html" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">evaluation test harness</a> you can use.</p>
+          </div>
+          <p style="color:var(--ink-muted);font-size:.94rem;">What you do is provide a set of sample inputs and expected outputs. Quarkus then scores the output of your LLM against the expected output. If the score is above a certain threshold, Quarkus passes the test.</p>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Here's a very simple example:</p>
+          <div class="code-wrap" style="margin-top:.9rem;">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeathermanTest.java</span></div>
+            <pre><span class="tok-annot">@QuarkusTest</span>
+<span class="tok-annot">@Evaluate</span>
+<span class="tok-kw">public class</span> WeathermanTest {
+
+    <span class="tok-annot">@Inject</span>
+    Weatherman weatherman;
+
+    <span class="tok-annot">@Test</span>
+    <span class="tok-kw">void</span> repliesAreCloseEnoughToExpected(
+            <span class="tok-annot">@ScorerConfiguration</span>(concurrency = 3) Scorer scorer,
+            <span class="tok-annot">@SampleLocation</span>(<span class="tok-str">"src/test/resources/samples.yaml"</span>) Samples&lt;String&gt; samples) {
+
+        EvaluationReport&lt;String&gt; report = scorer.evaluate(
+                samples,
+                params -&gt; weatherman.ask(params.get(0)),
+                <span class="tok-kw">new</span> SemanticSimilarityStrategy(0.8));
+
+        assertThat(report).hasScoreGreaterThan(70.0);
+    }
+}</pre>
+          </div>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;"><code class="mono">samples.yaml</code>:</p>
+          <div class="code-wrap" style="margin-top:.9rem;">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">samples.yaml</span></div>
+            <pre>- name: Current Weather
+  parameters:
+    - <span class="tok-str">"What is the current weather in San Diego?"</span>
+  expected-output: <span class="tok-str">"It is sunny and the temperature is 72 degrees."</span></pre>
           </div>
         </div>
 
