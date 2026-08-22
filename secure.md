@@ -1,11 +1,16 @@
 ## Secure your AI Applications
 
+[Quarkus Security](https://quarkus.io/guides/security-overview) has provided the features developers need to secure their Enterprise Java applications.
+Securing secrets, authentication protocols like OAuth2 and OIDC, and role-based access control among many other features
+have been available and mature for years within Quarkus.
 
-Talk about how core Quarkus has mature security integration and how just writing a Quarkus AI-infused application inherits
-security from the core.
+AI-infused applications are generally built on top of the same protocols as traditional web applications and services so
+to secure them, just leverage what's there right now.  Here's a few samples:
 
-### Security Blueprint
-Architectural diagram on how various components are secured.
+* Securing a Chat Bot
+* Securing an MCP client and server
 
-Show how chat apps and MCP are secured.
+AI Applications introduce a few more security vulnerabilities you need to be aware of.  The Quarkus team
+has put together a [blueprint](https://docs.quarkiverse.io/quarkus-langchain4j/dev/security.html) dealing with these vulnerabilities.
 
+[Guardrails](https://docs.quarkiverse.io/quarkus-langchain4j/dev/guardrails.html) are also an important part of this.
