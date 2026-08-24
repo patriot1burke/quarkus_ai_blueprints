@@ -419,39 +419,43 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="10" rx="2"/><path d="M8 9V6a2 2 0 012-2h4a2 2 0 012 2v3"/><path d="M3 13h18"/></svg></div>
           <div class="tile-head-text">
             <div class="tile-title-row"><h3>Tools</h3></div>
-            <p class="tile-teaser">Give the model hands.</p>
+            <p class="tile-teaser">Custom functions for your LLM.</p>
           </div>
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Annotate any CDI bean method with <code class="mono">@Tool</code> and describe what it does in plain language. Quarkus AI exposes it to the model through LangChain4j and handles the call-and-return loop, so the LLM can ask for the forecast instead of guessing at it.</p>
+          <p><em>Tools</em> are custom functions you provide to the LLM during a chat request that the LLM can use to process a response. The LLM looks at the user query and the list of functions you provide and decides whether or not it needs to pause text generation and call one of the functions to perform an action or to obtain more data.</p>
+          <p>Consider the <em>Weatherman</em> AI Service example. The LLM has no information about the current weather, so you add that functionality as a tool so it can answer queries successfully. This can easily be done with Quarkus AI.</p>
           <div class="code-wrap">
-            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeatherToolbox.java</span></div>
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeatherAPIToolbox.java</span></div>
             <pre><span class="tok-annot">@ApplicationScoped</span>
-<span class="tok-kw">public class</span> WeatherToolbox {
+<span class="tok-kw">public class</span> WeatherAPIToolbox {
+    // Pretend we have access to a Java weather API library that we can use!
     <span class="tok-annot">@Inject</span>
     WeatherAPI weather;
 
-    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the current weather for a specific city"</span>)
-    <span class="tok-kw">public String</span> currentWeather(<span class="tok-kw">String</span> city) {
-        <span class="tok-kw">return</span> weather.currentEither(city);
+    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the current weather for a specific location"</span>)
+    <span class="tok-kw">public String</span> currentWeather(<span class="tok-kw">String</span> location) {
+        <span class="tok-kw">return</span> weather.currentForcast(location);
     }
 
-    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the 10 day weather forecast for a specific city"</span>)
-    <span class="tok-kw">public</span> List&lt;<span class="tok-kw">String</span>&gt; tenDayForecast(<span class="tok-kw">String</span> city) {
-        <span class="tok-kw">return</span> weather.tenDayForecastEither(city);
+    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the 10 day weather forecast for a specific location"</span>)
+    <span class="tok-kw">public</span> List&lt;<span class="tok-kw">String</span>&gt; tenDayForecast(<span class="tok-kw">String</span> location) {
+        <span class="tok-kw">return</span> weather.tenDayForecast(location);
     }
-}
-
-<span class="tok-annot">@RegisterAiService</span>
+}</pre>
+          </div>
+          <p>Once you have your tools defined, you can just wire them into your AI Service.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">Weatherman.java</span></div>
+            <pre><span class="tok-annot">@RegisterAiService</span>
 <span class="tok-kw">public interface</span> Weatherman {
 
     <span class="tok-annot">@SystemMessage</span>(<span class="tok-str">"You are a weatherman.  Answer questions about the weather."</span>)
-    <span class="tok-annot">@Toolbox</span>(WeatherToolbox.<span class="tok-kw">class</span>)
+    <span class="tok-annot">@Toolbox</span>(WeatherAPIToolbox.<span class="tok-kw">class</span>)
     <span class="tok-kw">String</span> ask(<span class="tok-annot">@UserMessage</span> <span class="tok-kw">String</span> query);
 }</pre>
           </div>
-          <p><span class="state-pill">In progress</span> &nbsp;A best-practices guide for writing LLM tools.</p>
         </div>
       </details>
 
@@ -459,14 +463,35 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 11l7.6-4M8.2 13l7.6 4"/></svg></div>
           <div class="tile-head-text">
-            <div class="tile-title-row"><h3>Enterprise Toolboxes with MCP</h3><span class="state-pill">In progress</span></div>
+            <div class="tile-title-row"><h3>Enterprise Tools with MCP</h3><span class="state-pill">In progress</span></div>
             <p class="tile-teaser">Microservices for AI.</p>
           </div>
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Your organization has spent years writing microservices that already know how to analyze and report on the business. The MCP specification lets an LLM call them directly &mdash; think of it as microservices for AI. Quarkus AI can stand up an MCP server that publishes your toolboxes, and consume MCP servers published by others, so those existing systems become tools an agent can simply reach for.</p>
-          <ul><li>Enterprise toolbox blueprint &mdash; discovery and registry patterns for published toolboxes</li></ul>
+          <p>Your organization has spent years writing microservices that analyze and report your company's data and implement the processes of your organization. Wouldn't it be cool to leverage these existing systems for use within an LLM? The MCP specification defines a remote protocol for interacting with AI tools that are deployed remotely.</p>
+          <p>Quarkus AI provides a way to define <a href="https://docs.quarkiverse.io/quarkus-mcp-server/dev/index.html" target="_blank" rel="noopener" style="color:var(--accent-strong);text-decoration:underline;">your own MCP Server</a> to publish tools that can be used in any of your organization's LLM applications. Think of MCP as microservices for AI.</p>
+          <img src="https://docs.quarkiverse.io/quarkus-mcp-server/dev/_images/main.png" alt="Quarkus MCP Server architecture diagram" style="width:100%;border-radius:12px;box-shadow:var(--shadow);margin-top:.9rem;display:block;">
+          <p style="margin-top:.9rem;">Defining your own MCP Server is as easy as this:</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeatherAPIToolbox.java</span></div>
+            <pre><span class="tok-annot">@ApplicationScoped</span>
+<span class="tok-kw">public class</span> WeatherAPIToolbox {
+    // Pretend we have access to a Java weather API library that we can use!
+    <span class="tok-annot">@Inject</span>
+    WeatherAPI weather;
+
+    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the current weather for a specific location"</span>)
+    <span class="tok-kw">public String</span> currentWeather(<span class="tok-kw">String</span> location) {
+        <span class="tok-kw">return</span> weather.currentForcast(location);
+    }
+
+    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the 10 day weather forecast for a specific location"</span>)
+    <span class="tok-kw">public</span> List&lt;<span class="tok-kw">String</span>&gt; tenDayForecast(<span class="tok-kw">String</span> location) {
+        <span class="tok-kw">return</span> weather.tenDayForecast(location);
+    }
+}</pre>
+          </div>
         </div>
       </details>
 

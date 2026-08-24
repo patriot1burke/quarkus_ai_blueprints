@@ -1,11 +1,13 @@
 # LLM Tool Support
 
-_Tools_ are functions you provide to the LLM during a chat request that the LLM can use to process a response.
+Custom functions for your LLM.
+
+_Tools_ are custom functions you provide to the LLM during a chat request that the LLM can use to process a response.
 The LLM looks at the user query and the list of functions you provide and decides whether or not it needs to 
 pause text generation and call one of the functions to perform an action or to obtain more data.
 
 Consider the _Weatherman_ AI Service example.  The LLM will not have information about the current weather, so what
-you can that functionality to the LLM so it can answer queries successfully.
+you can that functionality to the LLM so it can answer queries successfully.  This can easily be done with Quarkus AI.
 
 ```java
 @ApplicationScoped
