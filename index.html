@@ -390,12 +390,12 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
 
           <div class="card-grid">
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-ai-services" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 4C7 4 6 5 6 7v3a2 2 0 01-2 2 2 2 0 012 2v3c0 2 1 3 3 3"/><path d="M15 4c2 0 3 1 3 3v3a2 2 0 002 2 2 2 0 00-2 2v3c0 2-1 3-3 3"/></svg></div>
           <div class="tile-head-text">
             <div class="tile-title-row"><h3>AI Services</h3></div>
-            <p class="tile-teaser">LLM interactions, declared not wired.</p>
+            <p class="tile-teaser">Simple Java interfaces for LLM interactions.</p>
           </div>
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
@@ -415,7 +415,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-tools" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="10" rx="2"/><path d="M8 9V6a2 2 0 012-2h4a2 2 0 012 2v3"/><path d="M3 13h18"/></svg></div>
           <div class="tile-head-text">
@@ -460,7 +460,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-mcp" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.2 11l7.6-4M8.2 13l7.6 4"/></svg></div>
           <div class="tile-head-text">
@@ -496,7 +496,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-chat" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5z"/></svg></div>
           <div class="tile-head-text">
@@ -506,12 +506,58 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Professional chat applications do more than print plain text &mdash; the good ones render what comes back from the model the way a real interface should. The Chat Routes framework gives Quarkus AI the invocation model for building exactly that kind of UI.</p>
-          <div class="link-row"><a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/chat-scopes.html#_chat_invocation_framework_chatroute">Chat Invocation Framework docs</a></div>
+          <p>Professional chat applications generally do a lot more than just display plain text to their human users. The good ones like to format information that comes from the LLM in a rich way, like what we're used to with traditional UIs. Quarkus AI provides the architecture for writing Rich Chat UIs via the <a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/chat-scopes.html#_chat_invocation_framework_chatroute" style="color:var(--accent-strong);text-decoration:underline;">Chat Routes</a> framework.</p>
+          <p>Chat Routes provides a websocket protocol so that your UI clients can interact with your <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>. Simply annotate your AI Service methods with <code class="mono">@ChatRoute</code> and you're good to go.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">Weatherman.java</span></div>
+            <pre><span class="tok-annot">@RegisterAiService</span>
+<span class="tok-kw">public interface</span> Weatherman {
+
+    <span class="tok-annot">@SystemMessage</span>(<span class="tok-str">"You are a weatherman.  Answer questions about the weather."</span>)
+    <span class="tok-annot">@ChatRoute</span>(<span class="tok-str">"weather-man"</span>)
+    <span class="tok-kw">String</span> ask(<span class="tok-annot">@UserMessage</span> <span class="tok-kw">String</span> query);
+}</pre>
+          </div>
+          <p>Chat Routes provides a Java and Javascript client API that allows you to send chat messages to your chat-routed AI Services.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">client.js</span></div>
+            <pre>client = <span class="tok-kw">new</span> ChatScopesClient();
+<span class="tok-kw">await</span> client.open(<span class="tok-str">"ws://localhost:8080/_chat/routes"</span>);
+
+builder = client.builder();
+session = <span class="tok-kw">await</span> builder.connect(<span class="tok-str">"weather-man"</span>);
+
+session.chat(<span class="tok-str">"What's the weather like in San Francisco?"</span>);</pre>
+          </div>
+          <p>The Chat Routes framework also allows your server to send back messages to your clients. This is really useful from tool methods when you want to render something specific on the client, or to send thinking messages back to the chat UI.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">WeatherAPIToolbox.java</span></div>
+            <pre><span class="tok-annot">@ApplicationScoped</span>
+<span class="tok-kw">public class</span> WeatherAPIToolbox {
+    // Pretend we have access to a Java weather API library that we can use!
+    <span class="tok-annot">@Inject</span>
+    WeatherAPI weather;
+
+    <span class="tok-annot">@Inject</span>
+    ChatRouteContext ctx;
+
+    <span class="tok-annot">@Tool</span>(<span class="tok-str">"Get the current weather for a specific location"</span>)
+    <span class="tok-kw">public String</span> currentWeather(<span class="tok-kw">String</span> location) {
+        // Send back a thinking message for chat UI to render while we wait for the API call to complete
+        ctx.thinking(<span class="tok-str">"Calling out to the national weather service for current forecast"</span>);
+        Forecast forecast = weather.currentForcast(location);
+        <span class="tok-kw">if</span> (forecast.type == RAIN) {
+            // have chat client render a RAIN icon
+            ctx.event(<span class="tok-str">"weather-alert"</span>, RAIN);
+        }
+        <span class="tok-kw">return</span> forecast.text();
+    }
+}</pre>
+          </div>
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-rag" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg></div>
           <div class="tile-head-text">
@@ -530,7 +576,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-agentic" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h11M4 12h16M4 18h8"/><circle cx="19" cy="6" r="1.6"/><circle cx="8" cy="18" r="1.6"/></svg></div>
           <div class="tile-head-text">
@@ -540,12 +586,12 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Chat and RAG still put a human in the driver's seat. Agentic workflows hand over the wheel: an agent, built from the same AI Services and CDI beans as the rest of the app, owns a process end to end and calls on the rest of the Quarkus ecosystem to get it done.</p>
+          <p>Chat and RAG still put a human in the driver's seat. Agentic workflows hand over the wheel: an agent, built from the same <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a> and CDI beans as the rest of the app, owns a process end to end and calls on the rest of the Quarkus ecosystem to get it done.</p>
           <ul><li>Agentic blueprints &mdash; architecture diagram and workflow plans</li></ul>
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-guardrails" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
           <div class="tile-head-text">
@@ -559,7 +605,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-cdi" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
           <div class="tile-head-text">
@@ -569,7 +615,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Every AI component &mdash; AI Services, Tools, RAG, agents &mdash; is a CDI bean, so the rest of Quarkus Core is never more than an <code class="mono">@Inject</code> away.</p>
+          <p>Every AI component &mdash; <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>, Tools, RAG, agents &mdash; is a CDI bean, so the rest of Quarkus Core is never more than an <code class="mono">@Inject</code> away.</p>
           <ul>
             <li><strong>Chat Memory</strong> lifecycle managed by bean scope</li>
             <li><strong>Agentic context</strong> lifecycle managed by bean scope</li>
@@ -579,7 +625,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         </div>
       </details>
 
-      <details class="tile" name="write-topics">
+      <details class="tile" id="tile-enterprise-java" name="write-topics">
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 3h6v3.5a2 2 0 002 2H21v6h-3.5a2 2 0 00-2 2V21H9v-3.5a2 2 0 00-2-2H3v-6h3.5a2 2 0 002-2V3z"/></svg></div>
           <div class="tile-head-text">
@@ -589,7 +635,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Because AI Services, Tools, and Agents are CDI beans, they live inside the same application as everything else you already run on Quarkus &mdash; Hibernate, Kafka, REST, and the rest of the extension catalogue are all still there.</p>
+          <p>Because <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>, Tools, and Agents are CDI beans, they live inside the same application as everything else you already run on Quarkus &mdash; Hibernate, Kafka, REST, and the rest of the extension catalogue are all still there.</p>
         </div>
       </details>
 
@@ -617,7 +663,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
           <div class="section-head">
             <span class="eyebrow">Test</span>
             <h2>Test AI Apps</h2>
-            <p style="margin-top:.7rem;">Quarkus has a great <a href="https://quarkus.io/guides/getting-started-testing" style="color:var(--accent-strong);text-decoration:underline;">test harness</a> for testing any Quarkus-based application, but testing interactions with the LLM can be a little tricky. Since the output of your code's interactions with the LLM is non-deterministic, you will probably get a different output even if you send in the same input every time. So, how can you test your <a href="#write" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>? Quarkus provides an <a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/testing.html" style="color:var(--accent-strong);text-decoration:underline;">evaluation test harness</a> you can use.</p>
+            <p style="margin-top:.7rem;">Quarkus has a great <a href="https://quarkus.io/guides/getting-started-testing" style="color:var(--accent-strong);text-decoration:underline;">test harness</a> for testing any Quarkus-based application, but testing interactions with the LLM can be a little tricky. Since the output of your code's interactions with the LLM is non-deterministic, you will probably get a different output even if you send in the same input every time. So, how can you test your <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>? Quarkus provides an <a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/testing.html" style="color:var(--accent-strong);text-decoration:underline;">evaluation test harness</a> you can use.</p>
           </div>
           <p style="color:var(--ink-muted);font-size:.94rem;">What you do is provide a set of sample inputs and expected outputs. Quarkus then scores the output of your LLM against the expected output. If the score is above a certain threshold, Quarkus passes the test.</p>
           <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Here's a very simple example:</p>
@@ -866,6 +912,43 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
   });
 
   panelEl.addEventListener('click', function(){ stopAutoplay(); });
+
+  function tileSlideIndex(tile){
+    var slide = tile.closest('.panel-slide');
+    return slide ? slides.indexOf(slide) : -1;
+  }
+
+  function openTile(id, immediate){
+    var tile = document.getElementById(id);
+    if(!tile || !tile.classList.contains('tile')) return false;
+    var slideIdx = tileSlideIndex(tile);
+    if(slideIdx === -1) return false;
+    if(immediate){
+      idx = slideIdx;
+    } else if(slideIdx !== idx){
+      activate(slideIdx);
+    }
+    tile.open = true;
+    requestAnimationFrame(function(){
+      tile.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+    return true;
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if(openTile(id)) stopAutoplay();
+  });
+
+  window.addEventListener('hashchange', function(){
+    if(openTile(location.hash.slice(1))) stopAutoplay();
+  });
+
+  if(location.hash && openTile(location.hash.slice(1), true)){
+    autoplay = false;
+  }
 
   render();
   if(autoplay) scheduleNext();
