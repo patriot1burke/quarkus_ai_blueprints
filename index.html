@@ -311,8 +311,9 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
 
 <section class="hero">
   <div class="wrap">
-    <h1>Enterprise AI for Java</h1>
-    <p class="lede">Enhance your coding agent experience. Write AI-infused applications that leverage the enterprise. Written for developers by developers because <b><i>Coding Still Matters!</i></b></p>
+      <h1>Quarkus AI</h1>
+    <h2>Enterprise AI for Java</h2>
+    <p class="lede">Write AI-infused Java applications that leverage the enterprise using our AI APIs and frameworks. Enhance your coding agent experience for any other Quarkus-based application too.</p>
 
     <div class="chip-row">
       <span>Coding Agents</span><span>AI Services</span><span>Tools</span><span>Chat</span><span>MCP</span><span>RAG</span><span>Agentic Workflows</span><span>Guardrails</span>
@@ -661,7 +662,7 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
             <p style="margin-top:.7rem;">One of the key benefits of writing AI-Applications with Quarkus is that you inherit all the benefits of a mature Enterprise Java stack. When deploying your AI Application you'll find that because you used Quarkus, you can deploy it anywhere. Quarkus has integration and support to run on OpenShift, Kubernetes, AWS, AWS Lambda, Azure, and Azure Functions and many other platforms.</p>
           </div>
           <ul style="margin:.6rem 0 0;padding-left:1.15rem;color:var(--ink-muted);font-size:.94rem;">
-            <li style="margin:.35rem 0;"><a href="https://quarkus.io/guides/container-image" style="color:var(--accent-strong);text-decoration:underline;">Build a Container Images</a></li>
+            <li style="margin:.35rem 0;"><a href="https://quarkus.io/guides/container-image" style="color:var(--accent-strong);text-decoration:underline;">Build a Container Image</a></li>
             <li style="margin:.35rem 0;"><a href="https://quarkus.io/guides/deploying-to-openshift" style="color:var(--accent-strong);text-decoration:underline;">Deploy to OpenShift</a></li>
             <li style="margin:.35rem 0;"><a href="https://quarkus.io/guides/deploying-to-kubernetes" style="color:var(--accent-strong);text-decoration:underline;">Deploy to Kubernetes</a></li>
             <li style="margin:.35rem 0;"><a href="https://aws.amazon.com/blogs/containers/how-to-deploy-your-quarkus-application-to-amazon-eks/" style="color:var(--accent-strong);text-decoration:underline;">Deploy to AWS</a></li>
@@ -676,18 +677,28 @@ footer{border-top:1px solid var(--border);padding:3rem 0 2rem;}
         <div class="panel-slide" id="monitor" data-name="Monitor">
           <div class="section-head">
             <span class="eyebrow">Monitor</span>
-            <div class="head-row" style="margin-top:.6rem;"><h2>Monitor</h2><span class="state-pill">In progress</span></div>
-            <p style="margin-top:.7rem;">The same LangFuse integration carries through to production, giving you telemetry into what your AI-infused application is doing at runtime.</p>
+            <h2 style="margin-top:.6rem;">Monitoring, Tracing, and Metrics</h2>
+            <p style="margin-top:.7rem;">Quarkus AI publishes OpenTelemetry metrics and traces that can be consumed by Prometheus or other monitoring systems. In particular, it has great integration with <a href="https://langfuse.com" style="color:var(--accent-strong);text-decoration:underline;">LangFuse</a>. LangFuse monitoring features allow you to make sense of all your AI telemetry data.</p>
           </div>
+          <h3 style="font-size:1.25rem;">Tracing</h3>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.5rem;">Quarkus AI publishes traces to the OpenTelemetry collector which LangFuse can consume. You can view individual conversation traces as your users and agents interact with the LLM.</p>
+          <img src="tracing-overview.png" alt="Conversation Trace" style="width:100%;border-radius:12px;box-shadow:var(--shadow);margin-top:.9rem;display:block;">
+          <h3 style="font-size:1.25rem;margin-top:1.8rem;">Metrics</h3>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.5rem;">The telemetry data published also allows LangFuse to provide insight into the performance of your AI model and application.</p>
+          <img src="llm-analytics.png" alt="Metrics" style="width:100%;border-radius:12px;box-shadow:var(--shadow);margin-top:.9rem;display:block;">
         </div>
 
         <!-- EVALUATE & SCORE -->
         <div class="panel-slide" id="evaluate" data-name="Evaluate &amp; Score">
           <div class="section-head">
             <span class="eyebrow">Evaluate &amp; Score</span>
-            <div class="head-row" style="margin-top:.6rem;"><h2>Evaluate &amp; Score</h2><span class="state-pill">In progress</span></div>
-            <p style="margin-top:.7rem;">LangFuse plugs into Quarkus AI for evaluation and scoring, so you can measure how well the application is actually doing &mdash; not just whether it compiles.</p>
+            <h2 style="margin-top:.6rem;">Evaluate &amp; Score</h2>
+            <p style="margin-top:.7rem;">LLMs are non-deterministic. When you switch out a model, change your prompts, or modify your RAG pipeline, how do you know if your changes improved the user experience? This is where Evaluation and Scoring comes in. Conversations with the LLM are scored using various scoring strategies. From those scores you can determine the quality of your AI applications.</p>
           </div>
+          <p style="color:var(--ink-muted);font-size:.94rem;">Evaluation makes a lot of sense when writing unit and integration tests, that was covered earlier on the <a href="#test" style="color:var(--accent-strong);text-decoration:underline;">Test</a> page. But, evaluation can also be done at runtime or post production to analyze patterns and trends. Quarkus AI's integration with <a href="https://langfuse.com" style="color:var(--accent-strong);text-decoration:underline;">LangFuse</a> makes it easy to evaluate and score your AI applications.</p>
+          <h3 style="font-size:1.25rem;margin-top:1.8rem;">Evaluation and LangFuse</h3>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.5rem;">LangFuse allows you to define data sets on a set of traces. From these data sets you can run your dataset through two versions of your system, and compare what comes out. The result tells you whether a change actually helped, and by how much. LangFuse allows you to define and apply different evaluation and scoring strategies to your data sets so you can determine the quality of your AI applications.</p>
+          <img src="score-analytics-full-dashboard.png" alt="Scoring" style="width:100%;border-radius:12px;box-shadow:var(--shadow);margin-top:.9rem;display:block;">
         </div>
 
       </div>
