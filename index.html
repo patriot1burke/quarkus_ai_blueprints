@@ -580,14 +580,45 @@ session.chat(<span class="tok-str">"What's the weather like in San Francisco?"</
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h11M4 12h16M4 18h8"/><circle cx="19" cy="6" r="1.6"/><circle cx="8" cy="18" r="1.6"/></svg></div>
           <div class="tile-head-text">
-            <div class="tile-title-row"><h3>Agentic Workflows</h3><span class="state-pill">In progress</span></div>
+            <div class="tile-title-row"><h3>Agentic Workflows</h3></div>
             <p class="tile-teaser">Agents that own a process end to end.</p>
           </div>
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Chat and RAG still put a human in the driver's seat. Agentic workflows hand over the wheel: an agent, built from the same <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a> and CDI beans as the rest of the app, owns a process end to end and calls on the rest of the Quarkus ecosystem to get it done.</p>
-          <ul><li>Agentic blueprints &mdash; architecture diagram and workflow plans</li></ul>
+          <p>Agentic Workflows allow you to encapsulate the complex processes and procedures of your business. To implement your process, you will have a combination of AI Agents, traditional enterprise coding, and human-in-the-loop interactions. Agentic Workflows provide the foundation to define and implement the interactions between all of these components. These workflows can be long-running, asynchronous, and can store state as needed. Quarkus AI provides the means for defining and implementing <a href="https://docs.langchain4j.dev/tutorials/agents" style="color:var(--accent-strong);text-decoration:underline;">Agentic Workflows</a>.</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">CreativeWriter.java</span></div>
+            <pre><span class="tok-kw">public interface</span> CreativeWriter {
+
+    <span class="tok-annot">@UserMessage</span>(<span class="tok-str">"""
+            You are a creative writer.
+            Generate a draft of a story no more than
+            3 sentences long around the given topic.
+            Return only the story and nothing else.
+            The topic is {{topic}}.
+            """</span>)
+    <span class="tok-annot">@Agent</span>(<span class="tok-str">"Generates a story based on the given topic"</span>)
+    <span class="tok-kw">String</span> generateStory(<span class="tok-annot">@V</span>(<span class="tok-str">"topic"</span>) <span class="tok-kw">String</span> topic);
+}</pre>
+          </div>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Agents can generate output and accept input from both other agents and humans. Agent workflows have similar constructs to traditional workflow definition too, such as:</p>
+          <ul>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#sequential-workflow" style="color:var(--accent-strong);text-decoration:underline;">Sequential workflows</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#loop-workflow" style="color:var(--accent-strong);text-decoration:underline;">Loops</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#conditional-workflow" style="color:var(--accent-strong);text-decoration:underline;">Conditionals</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#parallel-workflow" style="color:var(--accent-strong);text-decoration:underline;">Parallel execution</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#human-in-the-loop" style="color:var(--accent-strong);text-decoration:underline;">Human-in-the-loop interactions</a></li>
+          </ul>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">The API also supports defining your own custom workflow patterns and steps. Some pre-defined patterns also have abstractions you can derive from:</p>
+          <ul>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#goal-oriented-agentic-pattern" style="color:var(--accent-strong);text-decoration:underline;">Goal oriented</a> patterns</li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#peer-to-peer-agentic-pattern" style="color:var(--accent-strong);text-decoration:underline;">Peer-to-peer</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#blackboard-agentic-pattern" style="color:var(--accent-strong);text-decoration:underline;">Blackboard</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#voting-agentic-pattern" style="color:var(--accent-strong);text-decoration:underline;">Voting</a></li>
+            <li><a href="https://docs.langchain4j.dev/tutorials/agents#belief-desire-intention-bdi-agentic-pattern" style="color:var(--accent-strong);text-decoration:underline;">Belief-Desire-Intention</a></li>
+          </ul>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Check out the <a href="https://docs.langchain4j.dev/tutorials/agents" style="color:var(--accent-strong);text-decoration:underline;">documentation</a> for all the other features supported.</p>
         </div>
       </details>
 
@@ -601,7 +632,34 @@ session.chat(<span class="tok-str">"What's the weather like in San Francisco?"</
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Guardrails are the safety layer between a user and the model &mdash; real-time checks on what goes in and what comes back out, keeping the system on topic and inside legal and brand lines, without touching the model itself. Quarkus AI ships a library of built-in guardrails and an API for writing your own.</p>
+          <p>AI guardrails are safety controls, filters, and rules that sit between a user and an artificial intelligence model. They intercept inputs and outputs in real time to ensure the system behaves safely, stays on topic, and complies with legal or brand standards without changing the core model.</p>
+          <p>Quarkus AI supports both input and output guardrails. Input guardrails are used to catch things like prompt injection attacks or out-of-scope questions. Output Guardrails can be used to anonymize or redact sensitive information returned from an LLM response.</p>
+          <img src="https://docs.langchain4j.dev/img/guardrails-light-bg.png" alt="Guardrails architecture" style="width:100%;border-radius:12px;box-shadow:var(--shadow);margin-top:.9rem;display:block;">
+          <h3 style="font-size:1.25rem;margin-top:1.8rem;">A Simple Example</h3>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.5rem;">Here's a minimal input guardrail that rejects blank messages before they ever reach the model:</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">NotBlankGuardrail.java</span></div>
+            <pre><span class="tok-kw">public class</span> NotBlankGuardrail <span class="tok-kw">implements</span> InputGuardrail {
+
+    <span class="tok-annot">@Override</span>
+    <span class="tok-kw">public</span> InputGuardrailResult validate(UserMessage userMessage) {
+        <span class="tok-kw">if</span> (userMessage.singleText().isBlank()) {
+            <span class="tok-kw">return</span> failure(<span class="tok-str">"Message cannot be blank"</span>);
+        }
+        <span class="tok-kw">return</span> success();
+    }
+}</pre>
+          </div>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Wire it into an AI Service with the <code class="mono">@InputGuardrails</code> annotation:</p>
+          <div class="code-wrap">
+            <div class="code-chrome"><span></span><span></span><span></span><span class="cc-file">Weatherman.java</span></div>
+            <pre><span class="tok-kw">public interface</span> Weatherman {
+
+    <span class="tok-annot">@SystemMessage</span>(<span class="tok-str">"You are a weatherman.  Answer questions about the weather."</span>)
+    <span class="tok-annot">@InputGuardrails</span>(NotBlankGuardrail.<span class="tok-kw">class</span>)
+    <span class="tok-kw">String</span> ask(<span class="tok-annot">@UserMessage</span> <span class="tok-kw">String</span> query);
+}</pre>
+          </div>
         </div>
       </details>
 
