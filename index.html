@@ -667,18 +667,23 @@ session.chat(<span class="tok-str">"What's the weather like in San Francisco?"</
         <summary>
           <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
           <div class="tile-head-text">
-            <div class="tile-title-row"><h3>Glued Together with CDI</h3></div>
+            <div class="tile-title-row"><h3>Glued Together with Quarkus</h3></div>
             <p class="tile-teaser">Every AI component is a CDI bean.</p>
           </div>
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Every AI component &mdash; <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>, Tools, RAG, agents &mdash; is a CDI bean, so the rest of Quarkus Core is never more than an <code class="mono">@Inject</code> away.</p>
+          <p>Every AI component &mdash; <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>, Tools, RAG, agents &mdash; is a CDI bean, so the rest of Quarkus Core is never more than an <code class="mono">@Inject</code> away. Components are discovered and auto-wired at build time. All this makes writing AI applications feel like a completely integrated experience and reviewing agent-generated code becomes much easier.</p>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Some things to note:</p>
           <ul>
-            <li><strong>Chat Memory</strong> lifecycle managed by bean scope</li>
-            <li><strong>Agentic context</strong> lifecycle managed by bean scope</li>
-            <li>Plain CDI injection wires it all together</li>
-            <li>Two new scopes purpose-built for AI: <strong>@ChatScope</strong> for a conversation, <strong>@InvocationScope</strong> for a single invocation</li>
+            <li><strong>Chat Memory</strong> and <strong>Agentic Context</strong> lifecycle is <a href="https://docs.quarkiverse.io/quarkus-langchain4j/dev/messages-and-memory.html#_cdi_scope_and_memory_isolation" style="color:var(--accent-strong);text-decoration:underline;">managed by CDI bean scope</a></li>
+            <li>The LC4J <code class="mono">@MemoryId</code> concept can be managed by Quarkus so you don't have to do it yourself</li>
+            <li>Two new CDI scopes purpose-built for AI
+              <ul>
+                <li><strong>@ChatScope</strong> to manage different LLM conversations</li>
+                <li><strong>@InvocationScope</strong> for a single LLM interaction</li>
+              </ul>
+            </li>
           </ul>
         </div>
       </details>
@@ -693,7 +698,8 @@ session.chat(<span class="tok-str">"What's the weather like in San Francisco?"</
           <span class="chev"><svg viewBox="0 0 10 10"><path d="M5 0v10M0 5h10"/></svg></span>
         </summary>
         <div class="tile-body">
-          <p>Because <a href="#tile-ai-services" style="color:var(--accent-strong);text-decoration:underline;">AI Services</a>, Tools, and Agents are CDI beans, they live inside the same application as everything else you already run on Quarkus &mdash; Hibernate, Kafka, REST, and the rest of the extension catalogue are all still there.</p>
+          <p>AI Applications don't exist in a vacuum. Your AI Chat App will need to pull information and data from existing systems and microservices. Your <a href="#tile-agentic" style="color:var(--accent-strong);text-decoration:underline;">Agentic Workflows</a> will need to publish and subscribe to event-driven systems that already exist in your organization. The Quarkus platform as a whole integrates with all the popular Enterprise Java frameworks you love and have been using for years: Hibernate, Camel, REST (JAX-RS), Kafka, etc.</p>
+          <p style="color:var(--ink-muted);font-size:.94rem;margin-top:.9rem;">Quarkus also has a rich ecosystem of hundreds of extensions written by the Quarkus community. Browse the extensions catalog on <a href="https://code.quarkus.io" style="color:var(--accent-strong);text-decoration:underline;">code.quarkus.io</a> and <a href="https://extensions.quarkus.io" style="color:var(--accent-strong);text-decoration:underline;">extensions.quarkus.io</a> to see what's available.</p>
         </div>
       </details>
 
